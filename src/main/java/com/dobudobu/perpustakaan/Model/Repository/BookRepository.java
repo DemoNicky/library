@@ -11,7 +11,7 @@ import java.util.Optional;
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
 
-    public Optional<Book> findBySecureId(String BookId);
+    Optional<Book> findBySecureId(String BookId);
 
     Page<Book> findByjudulBukuContainingIgnoreCase(String name, Pageable page);
 }

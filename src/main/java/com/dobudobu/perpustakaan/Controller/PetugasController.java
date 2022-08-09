@@ -1,10 +1,9 @@
 package com.dobudobu.perpustakaan.Controller;
 
-import com.dobudobu.perpustakaan.DTO.PeminjamanBukuDTO;
-import com.dobudobu.perpustakaan.DTO.PinjamBukuDTO;
+import com.dobudobu.perpustakaan.DTO.InsertPetugasDTO;
 import com.dobudobu.perpustakaan.DTO.ResponseData;
-import com.dobudobu.perpustakaan.Model.Entity.Peminjaman;
-import com.dobudobu.perpustakaan.Service.PeminjamanService;
+import com.dobudobu.perpustakaan.Model.Entity.Petugas;
+import com.dobudobu.perpustakaan.Service.PetugasService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,26 +19,28 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api")
-public class PeminjamanController {
+public class PetugasController {
 
     @Autowired
-    private PeminjamanService peminjamanService;
+    private PetugasService petugasService;
 
     @Autowired
     private ModelMapper modelMapper;
 
-    @PostMapping("admin")
-    public ResponseEntity<ResponseData<Peminjaman>> minjamBuku(@RequestBody @Valid PinjamBukuDTO pinjamBukuDTO, Errors errors){
-        ResponseData<Peminjaman> responseData = new ResponseData<>();
+    @PostMapping("v1/admin/Register")
+    public ResponseEntity<ResponseData<Petugas>> registerPetugas(@RequestBody @Valid InsertPetugasDTO insertPetugasDTO, Errors errors){
+        ResponseData<Petugas> responseData = new ResponseData<>();
         if (errors.hasErrors()){
-            for (ObjectError error : errors.getAllErrors()) {
+            for (ObjectError error : errors.getAllErrors()){
                 responseData.getMessage().add(error.getDefaultMessage());
             }
             responseData.setStatus(false);
+            responseData.setPayload(null);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseData);
         }
 
-        responseData.setPayload(peminjamanService.peminjamanBuku(pinjamBukuDTO));
+        Petugas petugas = modelMapper.map(insertPetugasDTO, Petugas.class);
+        responseData.setPayload(petugasService.saveRegister(petugas));
         responseData.setStatus(true);
         return ResponseEntity.ok(responseData);
     }

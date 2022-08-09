@@ -22,7 +22,7 @@ public class Rak {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "kode_rak", length = 3)
+    @Column(name = "kode_rak", length = 3, unique = true)
     private String kodeRak;
 
     @Column(name = "lokasi_rak", length = 5)

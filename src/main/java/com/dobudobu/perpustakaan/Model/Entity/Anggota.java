@@ -26,7 +26,7 @@ public class Anggota extends AbstractBaseEntity{
     @Column(name = "jurusan_anggota", length = 20)
     private String jurusanAnggota;
 
-    @Column(name = "no_telp_anggota")
+    @Column(name = "no_telp_anggota", unique = true)
     private String noTelp;
 
     @Column(name = "alamat_anggota")

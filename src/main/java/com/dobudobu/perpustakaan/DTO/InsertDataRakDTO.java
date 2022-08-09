@@ -2,6 +2,7 @@ package com.dobudobu.perpustakaan.DTO;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.validation.constraints.NotNull;
 

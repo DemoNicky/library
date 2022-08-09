@@ -4,7 +4,9 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -16,7 +18,7 @@ public class Peminjaman {
     private Long id;
 
     @Column(name = "tanggal_pinjam", nullable = false)
-    private LocalDate tanggalPinjam = LocalDate.now();
+    private LocalDate tanggalPinjam;
 
     @Column(name = "tanggal_kembali", nullable = false)
     private LocalDate tanggal_kembali;
@@ -35,7 +37,7 @@ public class Peminjaman {
         inverseJoinColumns = {
             @JoinColumn(name = "id_book", referencedColumnName = "id")
         })
-    private List<Book> books;
+    private Set<Book> books;
 
 
 }

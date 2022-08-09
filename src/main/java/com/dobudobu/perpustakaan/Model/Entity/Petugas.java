@@ -19,7 +19,7 @@ public class Petugas extends AbstractBaseEntity{
     @Column(name = "jabatan_petugas", length = 50)
     private String jabatanPetugas;
 
-    @Column(name = "no_telp_petugas")
+    @Column(name = "no_telp_petugas", unique = true)
     private String noTelp;
 
     @Column(name = "alamat_petugas")
