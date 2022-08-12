@@ -32,5 +32,4 @@ public class Pengembalian {
     @JoinColumn(name = "petugas_id")
     private Petugas petugas;
 
-
 }

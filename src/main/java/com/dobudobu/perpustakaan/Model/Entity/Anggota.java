@@ -32,6 +32,9 @@ public class Anggota extends AbstractBaseEntity{
     @Column(name = "alamat_anggota")
     private String alamat;
 
+
+    private boolean meminjam = false;
+
     @OneToOne
     private AppUser appUser;
 }

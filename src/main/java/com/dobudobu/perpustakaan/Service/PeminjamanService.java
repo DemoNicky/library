@@ -5,6 +5,9 @@ import com.dobudobu.perpustakaan.Model.Entity.Peminjaman;
 
 public interface PeminjamanService {
 
-
     Peminjaman peminjamanBuku(PinjamBukuDTO pinjamBukuDTO);
+
+    void deletedPeminjaman(String securedId);
+
+//    Peminjaman findPeminjamBySecuredId(String secureId);
 }

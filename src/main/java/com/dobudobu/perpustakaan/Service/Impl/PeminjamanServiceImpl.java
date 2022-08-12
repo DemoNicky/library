@@ -9,6 +9,7 @@ import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -61,4 +62,20 @@ public class PeminjamanServiceImpl implements PeminjamanService {
 
         return peminjamanRepository.save(peminjaman);
     }
+
+    @Override
+    public void deletedPeminjaman(String securedId) {
+        Peminjaman peminjaman = peminjamanRepository.findBySecureId(securedId)
+                .orElseThrow(() -> new UsernameNotFoundException(String.format("id tidak di temukan")));
+
+        peminjamanRepository.deleteById(peminjaman.getId());
+    }
+
+//    @Override
+//    public Peminjaman findPeminjamBySecuredId(String secureId) {
+//        return peminjamanRepository.findBySecureId(secureId).get();
+//
+//    }
+
+
 }

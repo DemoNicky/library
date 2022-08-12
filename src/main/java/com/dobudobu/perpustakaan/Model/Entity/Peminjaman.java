@@ -1,17 +1,24 @@
 package com.dobudobu.perpustakaan.Model.Entity;
 
 import lombok.Data;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
 @Entity
 @Data
 @Table(name = "peminjaman")
-public class Peminjaman {
+@SQLDelete(sql = "UPDATE peminjaman SET deleted = true WHERE id =?")
+@Where(clause = "deleted = false")
+public class Peminjaman extends AbstractBaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +37,8 @@ public class Peminjaman {
     @ManyToOne
     @JoinColumn(name = "id_petugas", nullable = false)
     private Petugas petugas;
+
+    private boolean deleted = Boolean.FALSE;
 
     @ManyToMany
     @JoinTable(name = "peminjaman_book", joinColumns = {

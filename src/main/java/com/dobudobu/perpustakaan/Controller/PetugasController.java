@@ -27,7 +27,7 @@ public class PetugasController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @PostMapping("v1/admin/Register")
+    @PostMapping("v1/admin/register")
     public ResponseEntity<ResponseData<Petugas>> registerPetugas(@RequestBody @Valid InsertPetugasDTO insertPetugasDTO, Errors errors){
         ResponseData<Petugas> responseData = new ResponseData<>();
         if (errors.hasErrors()){
