@@ -28,7 +28,7 @@ public class PeminjamanController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @PostMapping("admin")
+    @PostMapping("admin/peminjaman")
     public ResponseEntity<ResponseData<Peminjaman>> minjamBuku(@RequestBody @Valid PinjamBukuDTO pinjamBukuDTO, Errors errors){
         ResponseData<Peminjaman> responseData = new ResponseData<>();
         if (errors.hasErrors()){

@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +22,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 @RestController
+//@Controller
 @RequestMapping("/api")
 public class BookController {
 
@@ -48,7 +51,7 @@ public class BookController {
         return ResponseEntity.ok(responseData);
     }
 
-    @GetMapping("v1/book")
+    @GetMapping("v1/book/get")
     public List<Book> getAllBook(){
         return bookService.getAllData();
     }

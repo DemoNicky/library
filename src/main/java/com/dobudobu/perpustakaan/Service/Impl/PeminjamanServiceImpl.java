@@ -5,19 +5,21 @@ import com.dobudobu.perpustakaan.Model.Entity.*;
 import com.dobudobu.perpustakaan.Model.Repository.*;
 import com.dobudobu.perpustakaan.Service.PeminjamanService;
 import lombok.AllArgsConstructor;
-import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class PeminjamanServiceImpl implements PeminjamanService {
 
     @Autowired
@@ -34,6 +36,9 @@ public class PeminjamanServiceImpl implements PeminjamanService {
 
     @Autowired
     private final AppUserRepo appUserRepo;
+
+    @Autowired
+    private final EmailSendService senderService;
 
     @Override
     public Peminjaman peminjamanBuku(PinjamBukuDTO pinjamBukuDTO) {
@@ -59,8 +64,20 @@ public class PeminjamanServiceImpl implements PeminjamanService {
         peminjaman.setAnggota(anggota);
         peminjaman.setBooks(books);
         peminjaman.setPetugas(petugas);
-
+        sendEmail(anggota.getAppUser().getEmail(), book.getJudulBuku(), peminjaman.getTanggal_kembali(), appUser.getFullName());
         return peminjamanRepository.save(peminjaman);
+    }
+
+    private void sendEmail(String email, String  book, LocalDate tanggalKembali, String nama){
+
+        String subject = "Pemberitahuan Peminjaman Buku Perpustakaan Online";
+
+        String body = "Kepada Yth. " + nama + " Kami informasikan bahwa kamu telah meminjam buku " + book +
+                " dari perpustakaan online, dengan tanggal pengembailan buku : " +tanggalKembali.toString()+
+                " \n\nUntuk informasi lebih lanjut silahkan datangi kantor cabang perpustakaan online terdekat\n\n\n" +
+                "UWU";
+
+        senderService.sendEmail(email, subject, body );
     }
 
     @Override

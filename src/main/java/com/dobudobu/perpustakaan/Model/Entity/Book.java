@@ -43,5 +43,4 @@ public class Book extends AbstractBaseEntity{
 //    @JsonManagedReference
     private Rak rak;
 
-
 }

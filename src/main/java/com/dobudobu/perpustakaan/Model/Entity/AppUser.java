@@ -1,5 +1,6 @@
 package com.dobudobu.perpustakaan.Model.Entity;
 
+import com.dobudobu.perpustakaan.Converter.StringAttreibuteConverter;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,6 +22,8 @@ public class AppUser implements UserDetails {
     @Column(nullable = false, length = 150)
     private String fullName;
 
+    //convert digunakan untuk mengenkripsi dan dekripsi field yang tersambung ke class lain
+    @Convert(converter = StringAttreibuteConverter.class)
     @Column(length = 200, nullable = false, unique = true)
     private String email;
 
